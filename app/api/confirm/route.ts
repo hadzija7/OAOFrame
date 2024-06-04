@@ -1,43 +1,28 @@
-import { FrameRequest, getFrameMessage, FrameValidationData } from '@coinbase/onchainkit';
-import { kv } from '@vercel/kv';
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
-import { getAddresses } from '../../lib/addresses';
-import { allowedOrigin } from '../../lib/origin';
 import { getFrameHtml } from '../../lib/getFrameHtml';
-import { mintResponse } from '../../lib/responses';
-
-function validButton(message?: FrameValidationData) {
-  return message?.button && message?.button > 0 && message?.button < 5;
-}
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
-  const body: FrameRequest = await req.json();
-  const { isValid, message } = await getFrameMessage(body, {
-    neynarApiKey: process.env.NEYNAR_API_KEY,
-  });
+  const body = await req.json();
+  const txhash = body.untrustedData.transactionId;
+  const id = req.url.split('=')[1];
 
-  if (isValid && validButton(message) && allowedOrigin(message)) {
-    const fid = message.interactor.fid;
-    const isActive = message.raw.action.interactor.active_status === 'active';
-
-    if (isActive) {
-      const addresses = getAddresses(message.interactor);
-      const address = addresses[message.button - 1];
-
-      await kv.set(`session:${fid}`, { address });
-
-      return new NextResponse(
-        getFrameHtml({
-          buttons: [{ label: '⬅️ Back' }, { label: '✅ Mint' }],
-          image: `${NEXT_PUBLIC_URL}/api/images/confirm?address=${address}`,
-          post_url: `${NEXT_PUBLIC_URL}/api/relay`,
-        }),
-      );
-    } else {
-      return mintResponse();
-    }
-  } else return new NextResponse('Unauthorized', { status: 401 });
+  return new NextResponse(
+    getFrameHtml({
+      buttons: [
+        {
+          label: 'View on Etherscan',
+          action: 'link',
+          target: `https://arbiscan.io/tx/${txhash}`,
+        },
+        {
+          label: 'check the Result',
+        },
+      ],
+      image: `${NEXT_PUBLIC_URL}/giraffe.png`,
+      post_url: `${NEXT_PUBLIC_URL}/api/result?id=${id}`,
+    }),
+  );
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
