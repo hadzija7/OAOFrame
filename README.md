@@ -1,4 +1,4 @@
-# 🔵 Fortune Teller with ORA Onchain AI Oracle and Farcaster frame 🟣
+# 🔵 OAOFrame 🟣: Fortune Teller with ORA Onchain AI Oracle and Farcaster frame
 
 A Farcaster frame that uses Onchain AI Model of Llama3 to predict the fortune (currently, daily horoscope of the Sun sign).
 
