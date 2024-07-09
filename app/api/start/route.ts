@@ -1,16 +1,14 @@
 import { FrameRequest, getFrameMessage } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
 import { allowedOrigin } from '../../lib/origin';
-import { mintResponse } from '../../lib/responses';
+import { frameResponse } from '../../lib/responses';
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
   const body: FrameRequest = await req.json();
   const { isValid, message } = await getFrameMessage(body);
 
-  const prompt = message;
-
   if (isValid && allowedOrigin(message)) {
-    return await mintResponse(message?.button);
+    return await frameResponse(message?.button);
   } else return new NextResponse('Unauthorized', { status: 402 });
 }
 

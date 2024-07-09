@@ -3,25 +3,18 @@ import type { Metadata } from 'next';
 import { NEXT_PUBLIC_URL } from './config';
 import { getCollection } from './lib/collection';
 
+// import Link from 'next/link';
+
 export async function generateMetadata(): Promise<Metadata> {
   const { name } = await getCollection();
 
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
-        label: 'Fire',
-      },
-      {
-        label: 'Earth',
-      },
-      {
-        label: 'Air',
-      },
-      {
-        label: 'Water',
-      },
+        label: 'Enter, Degen 🔮',
+      }
     ],
-    image: `${NEXT_PUBLIC_URL}/constellation.png`,
+    image: `${NEXT_PUBLIC_URL}/degen.png`,
     post_url: `${NEXT_PUBLIC_URL}/api/start`,
   });
 
@@ -42,6 +35,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Page() {
   const { name, image } = await getCollection();
+
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-center justify-center min-h-screen items-start font-body">
@@ -51,6 +45,11 @@ export default async function Page() {
         <div className="w-full md:w-1/4 flex flex-col items-center md:items-start space-y-4 mt-4 md:mt-0 md:pl-4">
           <h1 className="text-2xl font-bold">{name}</h1>
         </div>
+        {/* <div>
+          <Link href="/api/confirm?id=1">
+            <button>Go to Target Page</button>
+          </Link>
+        </div> */}
       </div>
     </div>
   );

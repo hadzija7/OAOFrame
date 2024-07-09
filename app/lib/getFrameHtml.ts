@@ -1,4 +1,5 @@
 import { FrameMetadataType, getFrameHtmlResponse } from '@coinbase/onchainkit';
+import { NEXT_PUBLIC_URL } from '../config';
 
 export function getFrameHtml(frameMetadata: FrameMetadataType) {
   const html = getFrameHtmlResponse(frameMetadata);
@@ -13,25 +14,31 @@ export function getFrameHtml(frameMetadata: FrameMetadataType) {
   return `${html.slice(0, html.length - 14)}${extraTags.join('')}</head></html>`;
 }
 
-export function getFireFrameHtml(frameMetadata: FrameMetadataType) {
+export function getInstructionsFrameHtml(frameMetadata: FrameMetadataType) {
+  const html = getFrameHtmlResponse(frameMetadata);
+
+  const extraTags = [
+    '<meta property="fc:frame" content="vNext" />',
+    `<meta name="fc:frame:image" content="${NEXT_PUBLIC_URL}/api/images/start" />`,
+    '<meta property="fc:frame:button:1" content="Tell the fortune" />',
+    '<meta property="fc:frame:button:1:action" content="tx" />',
+    `<meta property="fc:frame:button:1:target" content="${NEXT_PUBLIC_URL}/api/make-offer"/>`,
+    `<meta property="fc:frame:button:1:post_url" content="${NEXT_PUBLIC_URL}/api/confirm?id=1"/>`,
+    // `<meta property="fc:frame:input:text" content="Question 1/4 // What is your favorite chain?" />`
+  ];
+
+  // hack: remove close tags, add aspect ratio and required OG tags
+  return `${html.slice(0, html.length - 14)}${extraTags.join('')}</head></html>`;
+}
+
+export function getOfferFrameHtml(frameMetadata: FrameMetadataType) {
   const html = getFrameHtmlResponse(frameMetadata);
 
   const extraTags = [
     '<meta property="fc:frame" content="vNext" />',
     '<meta name="fc:frame:image" content="https://oao-frame.vercel.app/api/images/start" />',
-    '<meta property="fc:frame:button:1" content="Aries" />',
-    '<meta property="fc:frame:button:1:action" content="tx" />',
-    '<meta property="fc:frame:button:1:target" content="https://oao-frame.vercel.app/api/fire"/>',
-    '<meta property="fc:frame:button:1:post_url" content="https://oao-frame.vercel.app/api/confirm?id=0" />',
-    '<meta property="fc:frame:button:2" content="Leo" />',
-    '<meta property="fc:frame:button:2:action" content="tx" />',
-    '<meta property="fc:frame:button:2:target" content="https://oao-frame.vercel.app/api/fire"/>',
-    '<meta property="fc:frame:button:2:post_url" content="https://oao-frame.vercel.app/api/confirm?id=1" />',
-    '<meta property="fc:frame:button:3" content="Sagittarius" />',
-    '<meta property="fc:frame:button:3:action" content="tx" />',
-    '<meta property="fc:frame:button:3:target" content="https://oao-frame.vercel.app/api/fire"/>',
-    '<meta property="fc:frame:button:3:post_url" content="https://oao-frame.vercel.app/api/confirm?id=2" />',
   ];
+
   // hack: remove close tags, add aspect ratio and required OG tags
   return `${html.slice(0, html.length - 14)}${extraTags.join('')}</head></html>`;
 }

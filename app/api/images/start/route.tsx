@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { ImageResponse } from 'next/og';
 import { Card } from '../../../components/Card';
-import { TOKEN_IMAGE } from '../../../config';
+import { NEXT_PUBLIC_URL, TOKEN_IMAGE } from '../../../config';
 
 export async function GET(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     (
       <Card
         message={`Please select the quadrant of your zodiac sign`}
-        // image="https://oao-frame.vercel.app/horse.png"
+        image={`${NEXT_PUBLIC_URL}/horse.png`}
       />
     ),
   );

@@ -60,6 +60,7 @@ const abi = [
 import { getFrameMessage } from '@coinbase/onchainkit';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
+import { PROMPT } from '../../config';
 
 export async function POST(req: NextRequest) {
   const CID_BASE = -1;
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
   const id = CID_BASE + bid;
 
   // Get the contract instnace
-  const contract = '0x583d1C363fE97031d94aA7C5603DfC8B734B14c5';
+  const contract = PROMPT;
 
   // Get encoded data
   const data =
@@ -83,7 +84,7 @@ export async function POST(req: NextRequest) {
 
   // Return transaction details response to farcaster
   return NextResponse.json({
-    chainId: 'eip155:42161',
+    chainId: 'eip155:8453',
     method: 'eth_sendTransaction',
     params: {
       abi,
