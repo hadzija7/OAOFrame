@@ -60,7 +60,6 @@ const abi = [
 import { getFrameMessage } from '@coinbase/onchainkit';
 import { FrameRequest } from '@coinbase/onchainkit';
 import { NextRequest, NextResponse } from 'next/server';
-import { PROMPT } from '../../config';
 
 export async function POST(req: NextRequest) {
   const CID_BASE = -1;
@@ -76,7 +75,7 @@ export async function POST(req: NextRequest) {
   const id = CID_BASE + bid;
 
   // Get the contract instnace
-  const contract = PROMPT;
+  const contract = '0x583d1C363fE97031d94aA7C5603DfC8B734B14c5';
 
   // Get encoded data
   const data =
