@@ -1,8 +1,8 @@
 import dotenv from "dotenv"
 dotenv.config()
 
-export const NEXT_PUBLIC_URL = 'https://1106-79-101-176-46.ngrok-free.app'
-export const ALLOWED_ORIGIN = '1106-79-101-176-46.ngrok-free.app'
+export const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_URL
+export const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN
 export const CARD_DIMENSIONS = {
   width: 800,
   height: 800,
