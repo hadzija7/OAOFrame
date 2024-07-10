@@ -11,10 +11,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const frameMetadata = getFrameMetadata({
     buttons: [
       {
-        label: 'Enter, Degen 🔮',
+        label: 'Explore the Galaxy 🔮',
       }
     ],
-    image: `${NEXT_PUBLIC_URL}/degen.png`,
+    image: `${NEXT_PUBLIC_URL}/guide-frame.png`, //`${NEXT_PUBLIC_URL}/api/images/result?tx=fslkdjfsldkjfsldk`
     post_url: `${NEXT_PUBLIC_URL}/api/start`,
   });
 

@@ -14,17 +14,38 @@ export function getFrameHtml(frameMetadata: FrameMetadataType) {
   return `${html.slice(0, html.length - 14)}${extraTags.join('')}</head></html>`;
 }
 
+export function getResultPendingFrameHtml(txhash: string){
+  const html = getFrameHtmlResponse({
+    image: `${NEXT_PUBLIC_URL}/api/images/result?tx=Generating result...`,
+  });
+
+  const extraTags = [
+    '<meta property="og:title" content="OAO: Farcaster">',
+    '<meta property="og:description" content="Farcaster Protocol OAO">',
+    '<meta property="og:image" content="https://oao-frame.vercel.app/api/images/start">',
+    '<meta property="fc:frame:image:aspect_ratio" content="1:1" />',
+    '<meta property="fc:frame:button:1" content="Refresh" />',
+    '<meta property="fc:frame:button:1:action" />',
+    `<meta property="fc:frame:button:1:target" content="${NEXT_PUBLIC_URL}/api/result?id=${txhash}"/>`,
+  ];
+  // hack: remove close tags, add aspect ratio and required OG tags
+  const ret = `${html.slice(0, html.length - 14)}${extraTags.join('')}</head></html>`;
+
+  return ret
+}
+
 export function getInstructionsFrameHtml(frameMetadata: FrameMetadataType) {
   const html = getFrameHtmlResponse(frameMetadata);
 
   const extraTags = [
     '<meta property="fc:frame" content="vNext" />',
     `<meta name="fc:frame:image" content="${NEXT_PUBLIC_URL}/api/images/start" />`,
-    '<meta property="fc:frame:button:1" content="Tell the fortune" />',
+    `<meta property="fc:frame:input:text" content="Enter question" />`,
+    '<meta property="fc:frame:button:1" content="Ask Question" />',
     '<meta property="fc:frame:button:1:action" content="tx" />',
     `<meta property="fc:frame:button:1:target" content="${NEXT_PUBLIC_URL}/api/make-offer"/>`,
     `<meta property="fc:frame:button:1:post_url" content="${NEXT_PUBLIC_URL}/api/confirm?id=1"/>`,
-    // `<meta property="fc:frame:input:text" content="Question 1/4 // What is your favorite chain?" />`
+    '<meta property="fc:frame:image:aspect_ratio" content="1:1" />',
   ];
 
   // hack: remove close tags, add aspect ratio and required OG tags

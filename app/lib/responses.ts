@@ -16,7 +16,7 @@ export function errorResponse() {
 export async function frameResponse(bid: number): Promise<NextResponse> {
   return new NextResponse(
     getInstructionsFrameHtml({
-      image: `${NEXT_PUBLIC_URL}/summoning-frame.png`,
+      image: `${NEXT_PUBLIC_URL}/alien3.png`,
     })
   )
 }
